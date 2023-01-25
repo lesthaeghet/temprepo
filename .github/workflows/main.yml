@@ -1,7 +1,10 @@
 name: CI
 on:
   pull_request_review:
-    types: [submitted]
+    types: 
+      - submitted
+    branches:
+      - cleared
 env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
@@ -12,6 +15,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          ref: 'cleared'
       - name: Pushes to public repo
         id: push_directory
         uses: lesthaeghet/github-action-push-to-another-repository@main
