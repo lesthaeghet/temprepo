@@ -1,12 +1,9 @@
 name: CI
 on:
   pull_request_review:
-    types: 
-      - submitted
-    branches:
-      - cleared
-env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    types: [submitted]
+    branches: [cleared]
+  workflow_dispatch:
 jobs:
   approved:
     if: github.event.review.state == 'approved'
@@ -15,6 +12,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout repository
         uses: actions/checkout@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           ref: 'cleared'
       - name: Pushes to public repo
