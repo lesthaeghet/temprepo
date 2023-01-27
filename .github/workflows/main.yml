@@ -1,12 +1,12 @@
-name: CI
+name: Push To Public
 on:
-  pull_request_review:
-    types: [submitted]
-    branches: ['main', 'cleared']
+  pull_request:
+    types: ['closed']
+    branches: ['cleared']
   workflow_dispatch:
 jobs:
   approved:
-    if: github.event.review.state == 'approved'
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -16,14 +16,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           ref: 'cleared'
-      - name: Pushes to public repo
-        id: push_directory
-        uses: lesthaeghet/github-action-push-to-another-repository@main
+      - name: Push to public repo
         env:
           SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
-        with:
-          source-directory: .
-          destination-github-username: 'lesthaeghet'
-          destination-repository-name: 'testrepo'
-          user-email: noreply@noreply
-          target-branch: main
+        run: |
+          git remote add public git@github.com:lesthaeghet/testrepo.git
+          git push public master
