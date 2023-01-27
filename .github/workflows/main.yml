@@ -30,3 +30,4 @@ jobs:
           git remote add public git@github.com:lesthaeghet/testrepo.git
           git fetch --unshallow origin
           git push public cleared:main
+          git push public --tags
