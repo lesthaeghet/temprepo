@@ -29,4 +29,4 @@ jobs:
           git config --global user.name "AutoPush"
           git remote add public git@github.com:lesthaeghet/testrepo.git
           git fetch --unshallow origin
-          git push public cleared:public/main
+          git push public cleared:main
