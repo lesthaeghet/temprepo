@@ -28,4 +28,5 @@ jobs:
           git config --global user.email "noreply@noreply"
           git config --global user.name "AutoPush"
           git remote add public git@github.com:lesthaeghet/testrepo.git
+          git fetch --unshallow origin
           git push public cleared:public/main
